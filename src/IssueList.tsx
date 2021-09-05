@@ -23,7 +23,7 @@ function IssueList() {
 
   const classes = useStyles();
 
-  const [issueList, setIssueListState] = useState([]);
+  const [issueList, setIssueListState] = useState(Array.from({ length: 20 }));
   const [lastUpdatedPage, setLastUpdatedPageState] = useState(-1);
 
   function fetchMoreData(){
