@@ -40,7 +40,7 @@ function App() {
         </AppBar>
 
         <Switch>
-          <Route path="/issue-details">
+          <Route path="/issue-details/:issueID">
             <IssueDetails/>
           </Route>
           <Route path="/">

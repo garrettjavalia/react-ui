@@ -5,6 +5,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Octokit } from 'octokit';
 import {IssueItem, IssueItemProps } from './IssueItem';
 import { Link } from 'react-router-dom';
+import { GITHUB_TOKEN } from './GithubSecrets';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,7 +27,8 @@ function IssueList() {
   const classes = useStyles();
 
   //yea, use my token.......
-  const [octokit, setOctokitState] = useState(new Octokit({ auth: `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` }));
+  //비밀키를 나중에 옮겨야한다. 코드에 비밀키를 둘 수는 없다.
+  const [octokit, setOctokitState] = useState(new Octokit({ auth: GITHUB_TOKEN }));
   
   const [issueList, setIssueListState] = useState([] as Array<IssueItemProps>);
   const [nextUpdatedPage, setNextUpdatedPageState] = useState(1);
@@ -81,7 +83,7 @@ function IssueList() {
         loader={<h4>Loading...</h4>}
       >
         {issueList.map((item, index) => (
-          <Link to={"/issue-details?issueid="+item.ID}>
+          <Link to={"/issue-details/"+item.ID}>
             <IssueItem key={index} ID = {item.ID} author = {item.author} commentCount = {item.commentCount} date = {item.date} title={item.title}></IssueItem>
           </Link>
         ))}
