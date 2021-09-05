@@ -43,7 +43,7 @@ function IssueList() {
       direction: 'desc',
       per_page: 50,
     }).then(result => {
-      console.log(result);
+      //console.log(result);
       let datas:IssueItemProps[] = [];
       result.data.forEach((value, index, dataArray) => {
         datas.push(
@@ -79,7 +79,7 @@ function IssueList() {
         loader={<h4>Loading...</h4>}
       >
         {issueList.map((item, index) => (
-          <IssueItem ID = {item.ID} author = {item.author} commentCount = {item.commentCount} date = {item.date} title={item.title}></IssueItem>
+          <IssueItem key={index} ID = {item.ID} author = {item.author} commentCount = {item.commentCount} date = {item.date} title={item.title}></IssueItem>
         ))}
       </InfiniteScroll>
 
