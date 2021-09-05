@@ -1,18 +1,19 @@
-import { makeStyles, Typography } from "@material-ui/core";
+import { Divider, makeStyles, Typography } from "@material-ui/core";
 import { Fragment } from "react";
+import { Link, useRouteMatch } from "react-router-dom";
 
-export interface IssueItemProps{
-    ID:number,
-    title:string,
-    author:string,
-    date:string,
-    commentCount:number,
+export interface IssueItemProps {
+    ID: number,
+    title: string,
+    author: string,
+    date: string,
+    commentCount: number,
 };
 
 const useStyles = makeStyles((theme) => ({
     IssueItem: {
-        display:"flex",
-        flexDirection:"row",
+        display: "flex",
+        flexDirection: "row",
         flexGrow: 1,
         textAlign: "left",
         paddingLeft: theme.spacing(4),
@@ -23,16 +24,18 @@ const useStyles = makeStyles((theme) => ({
     CommentNumber: {
         marginTop: "auto",
         marginBottom: "auto",
-        marginLeft:"auto",
+        marginLeft: "auto",
     },
     CommentLeftDiv: {
         paddingRight: "auto",
     }
-  }));
+}));
 
-export const IssueItem : React.FunctionComponent<IssueItemProps> = (props) => {
+export const IssueItem: React.FunctionComponent<IssueItemProps> = (props) => {
 
     const classes = useStyles();
+
+    let match = useRouteMatch();
 
     return (
         <Fragment>
@@ -53,9 +56,11 @@ export const IssueItem : React.FunctionComponent<IssueItemProps> = (props) => {
                     </Typography>
                 </div>
 
+                <Divider></Divider>
+
             </div>
 
-        </Fragment>
+        </Fragment >
     );
 
 }

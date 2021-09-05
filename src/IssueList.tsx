@@ -4,6 +4,7 @@ import { Fragment, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Octokit } from 'octokit';
 import {IssueItem, IssueItemProps } from './IssueItem';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,15 +26,14 @@ function IssueList() {
   const classes = useStyles();
 
   //yea, use my token.......
-  const [octokit, setOctokitState] = useState(new Octokit({ auth: `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` }));
+  const [octokit, setOctokitState] = useState(new Octokit({ auth: `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` }));
   
   const [issueList, setIssueListState] = useState([] as Array<IssueItemProps>);
-  const [lastUpdatedPage, setLastUpdatedPageState] = useState(-1);
+  const [nextUpdatedPage, setNextUpdatedPageState] = useState(1);
 
   function fetchMoreData(){
     // a fake async api call like which sends
     // 20 more records in 1.5 secs
-    setLastUpdatedPageState(lastUpdatedPage + 1);
     
     octokit.request('GET /repos/{owner}/{repo}/issues', {
       owner: 'angular',
@@ -42,6 +42,7 @@ function IssueList() {
       sort: 'comments',
       direction: 'desc',
       per_page: 50,
+      page: nextUpdatedPage,
     }).then(result => {
       //console.log(result);
       let datas:IssueItemProps[] = [];
@@ -56,6 +57,7 @@ function IssueList() {
           }
         )
       });
+      setNextUpdatedPageState(nextUpdatedPage + 1);
       setIssueListState(issueList.concat(datas));
     });
 
@@ -63,7 +65,7 @@ function IssueList() {
 
   //it will forcefully update page on component load.
   useEffect(() => {
-   if(lastUpdatedPage === -1){
+   if(nextUpdatedPage === 1){
     fetchMoreData();
    } 
   })
@@ -79,7 +81,9 @@ function IssueList() {
         loader={<h4>Loading...</h4>}
       >
         {issueList.map((item, index) => (
-          <IssueItem key={index} ID = {item.ID} author = {item.author} commentCount = {item.commentCount} date = {item.date} title={item.title}></IssueItem>
+          <Link to={"/issue-details?issueid="+item.ID}>
+            <IssueItem key={index} ID = {item.ID} author = {item.author} commentCount = {item.commentCount} date = {item.date} title={item.title}></IssueItem>
+          </Link>
         ))}
       </InfiniteScroll>
 

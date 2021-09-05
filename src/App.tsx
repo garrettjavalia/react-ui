@@ -7,6 +7,7 @@ import {
   Link
 } from "react-router-dom";
 import IssueList from './IssueList';
+import { IssueDetails } from './IssueDetails';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -40,7 +41,7 @@ function App() {
 
         <Switch>
           <Route path="/issue-details">
-            {/*<Issue-Details/>*/}
+            <IssueDetails/>
           </Route>
           <Route path="/">
             <IssueList />
